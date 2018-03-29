@@ -6,7 +6,10 @@ zero-resource speech systems, notably the correspondence autoencoder
 focus is on using them with the [GlobalPhone
 corpus](https://csl.anthropomatik.kit.edu/english/globalphone.php).
 Because of dependencies on a number of different systems, it might not
-be straightforward to run all of these scripts.
+be straightforward to run all of these scripts. This is also not a detailed
+tutorial and mainly gives high-level instructions. While these allow
+to easily run most things, it is expected you also become familiar with
+the respective systems.
 
 ## Acoustic feature extraction, forced alignment
 
@@ -29,7 +32,7 @@ cd $KALDI_GP
 
 ### VTLN
 
-VTLN was found to be very beneficial for the cAE and UTD. The following
+VTLN was found to be very beneficial for the cAE and UTD [1]. The following
 script trains VTLN models and extracts adapted features (languages
 specified in the script).
 
@@ -57,6 +60,19 @@ cd $KALDI_GP
 ./train_monolingual.sh 0
 ```
 
+### Convert Kaldi .ark to Numpy .npz/.npy format
+
+The other systems generally expect features in Numpy format.
+
+```bash
+. config
+
+# Convert .ark to .npz
+./kaldi/ark2npz.sh $KALDI_GP/data/SP/train_mfcc $DATA/SP/train_mfcc.npz"
+
+# Convert .npz to .npy (if necessary)
+./misc/npz_to_npy.py $DATA/SP/train_mfcc.npz $DATA/SP/train_mfcc.npy
+```
 
 ## Dependencies
 
@@ -74,3 +90,19 @@ dependencies.
 * speech_dtw
 * tde
 * ZRTools
+
+### References
+
+[1] E. Hermann, S. Goldwater, "[Multilingual bottleneck features for subword modeling in zero-resource languages](https://arxiv.org/abs/1803.08863)", *arXiv preprint arXiv:1803.08863*, 2018.
+
+```
+@article{Hermann2018,
+  author = {{Hermann}, E. and {Goldwater}, S.},
+  title = "{Multilingual bottleneck features for subword modeling in zero-resource languages}",
+  journal = {ArXiv e-prints},
+  archivePrefix = "arXiv",
+  eprint = {1803.08863},
+  primaryClass = "cs.CL",
+  year = 2018,
+}
+```
