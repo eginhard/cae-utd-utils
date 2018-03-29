@@ -1,0 +1,11 @@
+#!/bin/bash
+
+###############
+# Directories #
+###############
+
+# Kaldi root directory
+KALDI=/group/project/cstr2/enno/kaldi
+
+# Kaldi GlobalPhone recipe
+KALDI_GP=$KALDI/egs/gp/s5
