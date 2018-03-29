@@ -2,7 +2,7 @@
 
 This repository contains documentation and utility scripts for several
 zero-resource speech systems, notably the correspondence autoencoder
-(cAE) and the ZRTools unsupervised term discovery system. The main
+(cAE) and the ZRTools unsupervised term discovery (UTD) system. The main
 focus is on using them with the [GlobalPhone
 corpus](https://csl.anthropomatik.kit.edu/english/globalphone.php).
 Because of dependencies on a number of different systems, it might not
@@ -11,11 +11,18 @@ tutorial and mainly gives high-level instructions. While these allow
 to easily run most things, it is expected you also become familiar with
 the respective systems.
 
+### Contents
+
+* [Feature extraction, forced alignment](#acoustic-feature-extraction-forced-alignment)
+* [cAE training](#cae-training)
+* [References](#references)
+
 ## Acoustic feature extraction, forced alignment
 
 ### Dependencies
 
-* [Kaldi](https://github.com/eginhard/kaldi/tree/global_phone) (forked)
+* [Kaldi](https://github.com/eginhard/kaldi/tree/global_phone) (fork)
+* [speech_dtw](https://github.com/eginhard/speech_dtw) (fork)
 
 ### Acoustic feature extraction
 
@@ -68,11 +75,18 @@ The other systems generally expect features in Numpy format.
 . config
 
 # Convert .ark to .npz
-./kaldi/ark2npz.sh $KALDI_GP/data/SP/train_mfcc $DATA/SP/train_mfcc.npz"
+./kaldi/ark2npz.sh $KALDI_GP/data/SP/train_mfcc $DATA/SP/train_mfcc.npz
 
 # Convert .npz to .npy (if necessary)
 ./misc/npz_to_npy.py $DATA/SP/train_mfcc.npz $DATA/SP/train_mfcc.npy
 ```
+
+## cAE training
+
+See the following repository for detailed instructions to pre-train and train
+the cAE and for hyperparameters.
+
+* [speech_correspondence](https://github.com/eginhard/speech_correspondence) (fork)
 
 ## Dependencies
 
@@ -91,7 +105,7 @@ dependencies.
 * tde
 * ZRTools
 
-### References
+## References
 
 [1] E. Hermann, S. Goldwater, "[Multilingual bottleneck features for subword modeling in zero-resource languages](https://arxiv.org/abs/1803.08863)", *arXiv preprint arXiv:1803.08863*, 2018.
 
