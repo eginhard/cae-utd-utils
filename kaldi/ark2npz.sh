@@ -20,8 +20,8 @@ echo "$0 $@"  # Print the command line for logging
 . ./misc/parse_options.sh || exit 1;
 
 if [ $# != 2 ]; then
-  echo "Usage: kaldi/ark2npz.sh [options] <data-dir> <out-npz>"
-  echo " e.g.: kaldi/ark2npz.sh $KALDI_GP/data/SP/train_mfcc $DATA/SP/train_mfcc.npz"
+  echo "Usage: $0 [options] <data-dir> <out-npz>"
+  echo " e.g.: $0 $KALDI_GP/data/SP/train_mfcc $DATA/SP/train_mfcc.npz"
   echo "Options:"
   echo "  --cmvn-opts    : CMVN options (see apply-cmvn)"
   echo "  --delta-opts   : Delta options (see add-deltas)"
@@ -41,6 +41,9 @@ echo "Reading features: $feats"
 echo "With CMVN stats from: $cmvn"
 apply-cmvn $cmvn_opts --utt2spk=ark:$utt2spk scp:$cmvn scp:$feats ark:- \
     | add-deltas $delta_opts ark:- ark,t:${tmp_ark}
+
+out_dir=$(dirname "$out_npz")
+[ ! -d $out_dir ] && mkdir -p $out_dir
 
 echo -e "\nWriting npz: ${out_npz}"
 python ${SPEECH_DTW}/utils/kaldi2npz.py ${tmp_ark} ${out_npz}

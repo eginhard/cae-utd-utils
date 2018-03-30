@@ -2,14 +2,18 @@
 
 This repository contains documentation and utility scripts for several
 zero-resource speech systems, notably the correspondence autoencoder
-(cAE) and the ZRTools unsupervised term discovery (UTD) system. The main
-focus is on using them with the [GlobalPhone
+(cAE) and the ZRTools unsupervised term discovery (UTD) system. The
+main focus is on using them with the [GlobalPhone
 corpus](https://csl.anthropomatik.kit.edu/english/globalphone.php).
+This is not a detailed tutorial and mainly gives high-level
+instructions. While these allow to run most things, it is expected you
+also become familiar with the respective systems.
+
 Because of dependencies on a number of different systems, it might not
-be straightforward to run all of these scripts. This is also not a detailed
-tutorial and mainly gives high-level instructions. While these allow
-to easily run most things, it is expected you also become familiar with
-the respective systems.
+be straightforward to run all of these scripts. Most dependencies are
+forks because of modifications I made. See the individual repositories
+for detailed installation instructions and further dependencies. Most
+dependencies expect Python 2.
 
 ### Contents
 
@@ -84,23 +88,42 @@ The other systems generally expect features in Numpy format.
 ## cAE training
 
 See the following repository for detailed instructions to pre-train and train
-the cAE and for hyperparameters.
+the cAE and to use it to encode features. Pre-training only requires
+a .npy archive of speech features, cAE training requires DTW-aligned
+word pairs (see below).
 
 * [speech_correspondence](https://github.com/eginhard/speech_correspondence) (fork)
 
+**Note:** For this you have to install Theano version 0.9 (`pip
+install theano==0.9`) to be able to use Pylearn2.
+
+## Word pairs
+
+### Gold-standard pairs
+
+Gold-standard same-word pairs are extracted from the force-aligned
+transcriptions. Words that are at least 0.5 seconds and 5 characters
+long are selected and then all possible same-word pairs are generated.
+For the training set, the maximum number of pairs to generate per word
+type can be set to limit the total number of pairs.
+
+The script also generates word pairs (both same-word and different-word)
+for the same-different evaluation task (see below).
+
+```bash
+. config
+
+# Extract gold-standard pairs for French and Spanish with no more than 20 pairs
+# per word type.
+./word_pairs/extract_pairs.sh "FR SP" 20
+```
+
+### UTD pairs
+
 ## Dependencies
-
-* [Python 2](https://www.python.org/) (because the other dependencies use Python 2)
-
-Depending on what you want to run, you might not need all of the following.
-Most links go to my own forks because of modifications I made. See the
-individual repositories for detailed installation instructions and further
-dependencies.
 
 * ABXpy
 * bucktsong_segmentalist
-* speech_correspondence: **Note:** For this you have to install Theano version 0.9
-  (`pip install theano==0.9`) to be able to use Pylearn2.
 * speech_dtw
 * tde
 * ZRTools

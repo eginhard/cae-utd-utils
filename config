@@ -7,6 +7,17 @@ DATA=/disk/scratch/s1680167/zero/data/word_pairs
 # Temporary file directory
 TMP=/tmp
 
+# String used to delimit values in various files.
+export DELIMITER="###"
+
+##########
+# Corpus #
+##########
+
+# Folder with forced alignments in .ctm format.
+# Should have a subfolder for each language.
+GP_ALIGNMENTS=/group/project/cstr2/enno/zero/data/gp_alignments
+
 ################
 # Dependencies #
 ################
