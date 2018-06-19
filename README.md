@@ -15,10 +15,14 @@ forks because of modifications I made. See the individual repositories
 for detailed installation instructions and further dependencies. Most
 dependencies expect Python 2.
 
+Adjust the `config` file as necessary for your local setup.
+
 ### Contents
 
 * [Feature extraction, forced alignment](#acoustic-feature-extraction-forced-alignment)
 * [cAE training](#cae-training)
+* [Word pairs](#word-pairs)
+* [Evaluation](#evaluation)
 * [References](#references)
 
 ## Acoustic feature extraction, forced alignment
@@ -61,7 +65,8 @@ The following script trains a basic context-dependent triphone model which
 is used for forced alignment (languages specified in the script). The
 later stages also train more advanced models and extract high-resolution
 MFCCs for DNN training, which can all be skipped if only forced alignments
-are needed.
+are needed. The output will be word- and phone-level alignments in .ctm format
+and is stored in the folder specified in `$KALDI_GP/path.sh`.
 
 ```bash
 . config
@@ -120,13 +125,70 @@ for the same-different evaluation task (see below).
 
 ### UTD pairs
 
+#### Dependencies
+
+* [ZRTools](https://github.com/eginhard/ZRTools) (fork)
+
+In a true zero-resource setting, the word pairs are obtained from an
+unsupervised term discovery (UTD) system, in our case ZRTools. **Note:**
+there are currently several directories set by hand within the ZRTools
+scripts, so the following instructions won't work out-of-the-box on a
+different system.
+
+```bash
+. config
+cd $ZRTOOLS
+
+# Run UTD on the Spanish training data over 30 cores.
+./run_utd SP 30 train
+
+# Check progress of UTD
+./done.sh exp/gp-SP
+
+# Cluster UTD matches with DTW threshold 0.8
+# I always do this initially so that information about all matches is
+# preserved in the `matches/master_match` file and I can delete files
+# in the next step that can take up a lot of space.
+./post_disc gp-SP 0.8 SP
+
+# Delete files that take up space and aren't needed anymore.
+rm exp/gp-SP/disc.cmd*
+rm exp/gp-SP/matches/out*
+
+# Now do the actual clustering from which we will generate pairs. You might
+# want to fine-tune the threshold, but 0.88 works well for PLPs.
+./post_disc gp-SP 0.88 SP
+
+# Go back.
+cd $OLDPWD
+```
+
+After clustering and extracting the pairs, a few more steps are required
+to prepare them for cAE training.
+
+```bash
+. config
+
+# Post-process the pairs.
+./utd/postprocess_pairs.sh exp/gp-SP SP
+
+# The previous script conveniently prints the steps you should run next:
+```
+
+## Evaluation
+
+### Same-different
+
+### ABX
+
+### UTD evaluation
+
 ## Dependencies
 
 * ABXpy
 * bucktsong_segmentalist
 * speech_dtw
 * tde
-* ZRTools
 
 ## References
 

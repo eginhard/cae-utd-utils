@@ -7,7 +7,7 @@ DATA=/disk/scratch/s1680167/zero/data/word_pairs
 # Temporary file directory
 TMP=/tmp
 
-# String used to delimit values in various files.
+# String used to delimit values in various files (shouldn't use whitespace).
 export DELIMITER="###"
 
 ##########
@@ -34,3 +34,6 @@ SPEECH_DTW=$HOME/zero/speech_dtw
 # bucktsong_segmentalist directory
 # (https://github.com/eginhard/bucktsong_segmentalist)
 BUCKTSONG_SEGMENTALIST=$HOME/zero/bucktsong_segmentalist
+
+# ZRTools root directory
+ZRTOOLS=/disk/scratch/s1680167/zero/ZRTools
