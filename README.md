@@ -192,16 +192,29 @@ to prepare them for cAE training.
 
 ## References
 
-[1] E. Hermann, S. Goldwater, "[Multilingual bottleneck features for subword modeling in zero-resource languages](https://arxiv.org/abs/1803.08863)", *arXiv preprint arXiv:1803.08863*, 2018.
+[1] E. Hermann, S. Goldwater, "[Multilingual bottleneck features for subword modeling in zero-resource languages](https://www.isca-speech.org/archive/Interspeech_2018/abstracts/2334.html)", In *Proceedings of Interspeech*, pp. 2668–2672. 2018. 
 
-```
-@article{Hermann2018,
-  author = {{Hermann}, E. and {Goldwater}, S.},
-  title = "{Multilingual bottleneck features for subword modeling in zero-resource languages}",
-  journal = {ArXiv e-prints},
-  archivePrefix = "arXiv",
-  eprint = {1803.08863},
-  primaryClass = "cs.CL",
-  year = 2018,
+[2] E. Hermann, H. Kamper, S. Goldwater, "[Multilingual and Unsupervised Subword Modeling for Zero-Resource Languages](https://arxiv.org/abs/1811.04791)", *Computer Speech and Language*, Vol. 65. 2021.
+
+```BibTeX
+@inproceedings{Hermann2018,
+  title = {Multilingual {{Bottleneck Features}} for {{Subword Modeling}} in {{Zero}}-Resource {{Languages}}},
+  booktitle = {Proc. {{Interspeech}}},
+  author = {Hermann, Enno and Goldwater, Sharon},
+  year = {2018},
+  pages = {2668--2672},
+  publisher = {{ISCA}},
+  doi = {10.21437/Interspeech.2018-2334}
 }
+
+@article{Hermann2021,
+  title = {Multilingual and {{Unsupervised Subword Modeling}} for {{Zero}}-{{Resource Languages}}},
+  author = {Hermann, Enno and Kamper, Herman and Goldwater, Sharon},
+  year = {2021},
+  volume = {65},
+  journal = {Computer Speech \& Language}
+}
+
+
+
 ```
